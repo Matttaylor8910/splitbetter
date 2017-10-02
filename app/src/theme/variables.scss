@@ -24,8 +24,9 @@ $tabs-tab-color: color($colors, light);
 $tabs-tab-text-color: color($colors, light);
 
 // Default Background
-$background-color: color($colors, primary);
-$text-color: color($colors, light);
+ion-content {
+  background-color: color($colors, primary) !important;
+}
 
 // Custom Lists
 

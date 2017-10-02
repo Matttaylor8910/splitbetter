@@ -5,8 +5,18 @@
 </ion-header>
 
 <ion-content class="home" padding>
-  <h2>Welcome to SplitBetter!</h2>
-  <p>
-    This app will help you split out group expenses easily.
-  </p>
+  <ion-card *ngFor="let item of weather">
+    <ion-card-header>{{ item.dateFormatted }}</ion-card-header>
+    <ion-list>
+      <ion-item>
+        <strong>Summary: </strong>{{ item.summary }}
+      </ion-item>
+      <ion-item>
+        <strong>Celsius: </strong>{{ item.temperatureC }}&deg;
+      </ion-item>
+      <ion-item>
+        <strong>Fahrenheit: </strong>{{ item.temperatureF }}&deg;
+      </ion-item>
+    </ion-list>
+  </ion-card>
 </ion-content>
