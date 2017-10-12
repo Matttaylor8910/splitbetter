@@ -1,6 +1,17 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { WeatherTestProvider } from '../../providers/weather-test/weather-test';
+
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+
+interface Split {
+  title: string;
+  payer: string;
+  participants: string;
+  cost: string;
+  id?: string;
+}
 
 @Component({
   selector: 'page-home',
@@ -8,16 +19,29 @@ import { WeatherTestProvider } from '../../providers/weather-test/weather-test';
 })
 export class HomePage {
 
-  weather: any;
+  newSplit = {
+    title: '',
+    payer: '',
+    participants: '',
+    cost: ''
+  };
 
-  constructor(public navCtrl: NavController, private weatherTestProvider: WeatherTestProvider) {
+  splitsCollection: AngularFirestoreCollection<Split>;
+  splits: Observable<Split[]>;
 
-  }
+  constructor(public navCtrl: NavController, private afs: AngularFirestore) {}
 
   ionViewWillEnter() {
-    this.weatherTestProvider.getWeather().subscribe(weather => {
-       this.weather = weather;
-    });
+    this.splitsCollection = this.afs.collection('splits');  // reference
+    this.splits = this.splitsCollection.valueChanges();       // observable of notes data
+  }
+
+  addSplit() {
+    this.splitsCollection.add(this.newSplit);
+  }
+
+  removeSplit(split: Split) {
+    console.log(split);
   }
 
 }

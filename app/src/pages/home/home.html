@@ -5,18 +5,42 @@
 </ion-header>
 
 <ion-content class="home">
-  <ion-card *ngFor="let item of weather">
-    <ion-card-header>{{ item.dateFormatted }}</ion-card-header>
-    <ion-list>
-      <ion-item>
-        <strong>Summary: </strong>{{ item.summary }}
-      </ion-item>
-      <ion-item>
-        <strong>Celsius: </strong>{{ item.temperatureC }}&deg;
-      </ion-item>
-      <ion-item>
-        <strong>Fahrenheit: </strong>{{ item.temperatureF }}&deg;
-      </ion-item>
-    </ion-list>
+
+  <ion-card *ngFor="let split of splits | async" (tap)="removeSplit(split)">
+    <ion-item>
+      <strong>{{ split.payer }}</strong> paid for <strong>{{ split.title }}</strong> for <strong>{{ split.cost }}</strong>
+      <p>Split evently between {{ split.participants }} and {{ split.payer }}</p>
+    </ion-item>
   </ion-card>
+
+  <ion-card>
+    <form name="newSplitForm">
+      <ion-list>
+        <ion-item>
+          <ion-label fixed>Paid?</ion-label>
+          <ion-input name="payer" type="text" [(ngModel)]="newSplit.payer"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label fixed>What?</ion-label>
+          <ion-input name="title" type="text" [(ngModel)]="newSplit.title"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label fixed>Who?</ion-label>
+          <ion-input name="participants" type="text" [(ngModel)]="newSplit.participants"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label fixed>Cost?</ion-label>
+          <ion-input name="cost" type="text" [(ngModel)]="newSplit.cost"></ion-input>
+        </ion-item>
+      </ion-list>
+    </form>
+  </ion-card>
+
+  <ion-card>
+    <button ion-button no-margin full color="light" (click)="addSplit()">Add New Split</button>
+  </ion-card>
+
 </ion-content>
