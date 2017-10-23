@@ -27,13 +27,17 @@ export class HomePage {
   };
 
   splitsCollection: AngularFirestoreCollection<Split>;
-  splits: Observable<Split[]>;
+  // TODO: strongly type
+  splits: Observable<any[]>;
 
   constructor(public navCtrl: NavController, private afs: AngularFirestore) {}
 
   ionViewWillEnter() {
+    // TODO: look up difference between valueChanges and snapshotChanges
     this.splitsCollection = this.afs.collection('splits');  // reference
-    this.splits = this.splitsCollection.valueChanges();       // observable of notes data
+    this.splits = this.splitsCollection.snapshotChanges().map(changes => {
+      return changes.map(c => ({ id: c.payload.doc.id, ...c.payload.doc.data() }));
+    });
   }
 
   addSplit() {
@@ -41,7 +45,7 @@ export class HomePage {
   }
 
   removeSplit(split: Split) {
-    console.log(split);
+    this.splitsCollection.doc(split.id).delete();
   }
 
 }

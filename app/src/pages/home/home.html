@@ -6,11 +6,22 @@
 
 <ion-content class="home">
 
-  <ion-card *ngFor="let split of splits | async" (tap)="removeSplit(split)">
-    <ion-item>
-      <strong>{{ split.payer }}</strong> paid for <strong>{{ split.title }}</strong> for <strong>{{ split.cost }}</strong>
-      <p>Split evently between {{ split.participants }} and {{ split.payer }}</p>
-    </ion-item>
+  <ion-card *ngFor="let split of splits | async">
+    <ion-list>
+      <ion-item-sliding>
+        <ion-item>
+          <strong>{{ split.payer }}</strong> paid for <strong>{{ split.title }}</strong> for <strong>{{ split.cost
+          }}</strong>
+          <p>Split evently between {{ split.participants }} and {{ split.payer }}</p>
+        </ion-item>
+        <ion-item-options side="right">
+          <button ion-button color="danger" (tap)="removeSplit(split)">
+            <ion-icon name="trash"></ion-icon>
+            Kill
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
   </ion-card>
 
   <ion-card>
