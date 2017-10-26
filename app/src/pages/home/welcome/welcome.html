@@ -1,0 +1,35 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>SplitBetter</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-card padding>
+    <h1 text-center>Hey What's Up Hello</h1>
+    <p text-center padding-top>Welcome to SplitBetter! We'll just need a few things from you before we can get started.</p>
+  </ion-card>
+
+  <ion-card *ngIf="user">
+    <ion-item>
+      <ion-label stacked>Who are you?</ion-label>
+      <ion-input type="text" placeholder="required" [(ngModel)]="user.name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>What's your email?*</ion-label>
+      <ion-input type="email" placeholder="optional" [(ngModel)]="user.email"></ion-input>
+    </ion-item>
+
+    <p padding>*Your email is not necessary, but your account will not be able to be recovered if you lose your phone or
+      uninstall the app.</p>
+
+    <button [disabled]="!user.name" ion-button block clear (tap)="getStarted(user)">
+      Get Started
+    </button>
+  </ion-card>
+</ion-content>

@@ -7,9 +7,10 @@ import { HttpModule } from '@angular/http';
 import { environment } from '../environments/local.config';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { IonicStorageModule } from '@ionic/storage';
 
 import { AboutPage } from '../pages/about/about';
-import { HomePage } from '../pages/home/home';
+import { HomePageModule } from '../pages/home/home.module';
 import { TabsPage } from '../pages/tabs/tabs';
 import { SettingsPage } from '../pages/settings/settings';
 
@@ -18,25 +19,25 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { WeatherTestProvider } from '../providers/weather-test/weather-test';
 
 @NgModule({
-  declarations: [
-    MyApp,
-    AboutPage,
-    HomePage,
-    TabsPage,
-    SettingsPage
-  ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpModule,
     AngularFireModule.initializeApp(environment.config),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    IonicStorageModule.forRoot(),
+    HomePageModule
+  ],
+  declarations: [
+    MyApp,
+    AboutPage,
+    TabsPage,
+    SettingsPage
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     AboutPage,
-    HomePage,
     TabsPage,
     SettingsPage
   ],
