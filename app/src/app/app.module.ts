@@ -24,7 +24,7 @@ import { WeatherTestProvider } from '../providers/weather-test/weather-test';
     IonicModule.forRoot(MyApp),
     HttpModule,
     AngularFireModule.initializeApp(environment.config),
-    AngularFirestoreModule,
+    AngularFirestoreModule.enablePersistence(),
     IonicStorageModule.forRoot(),
     HomePageModule
   ],

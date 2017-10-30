@@ -1,0 +1,38 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()" color="danger">Cancel</button>
+    </ion-buttons>
+    <ion-title>New Split</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="createSplit()">Create</button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-list>
+    <ion-item>
+      <ion-label stacked>Description</ion-label>
+      <ion-input type="text" [(ngModel)]="split.title" placeholder="Super Awesome Trip"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Currency</ion-label>
+      <ion-select [(ngModel)]="split.currency">
+        <ion-option *ngFor="let currency of supportedCurrencies" [value]="currency">{{ currency.name }}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Participants</ion-label>
+      <ion-input *ngFor="let participant of split.participants" [(ngModel)]="participant.name" type="text"
+                 placeholder="Add another" (keyup)="changed(participant.name)"></ion-input>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

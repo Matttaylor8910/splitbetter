@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 import { WelcomeModal } from './welcome/welcome';
+import { NewSplitModal } from './new-split/new-split';
 
 interface Split {
   title: string;
@@ -32,6 +33,8 @@ export class HomePage {
   splitsCollection: AngularFirestoreCollection<Split>;
   // TODO: strongly type
   splits: Observable<any[]>;
+  hasGroups: boolean;
+  user: any;
 
   constructor(
     public navCtrl: NavController,
@@ -42,15 +45,18 @@ export class HomePage {
 
   ionViewWillEnter() {
     // ask the user who they are if they aren't set up
-    this.storage.get('user').then((val) => {
-      if (!val) {
+    this.storage.get('user').then((user) => {
+      if (!user) {
         this.presentWelcomeModal();
+      } else {
+        this.user = user;
       }
     });
 
     // TODO: look up difference between valueChanges and snapshotChanges
     this.splitsCollection = this.afs.collection('splits');  // reference
     this.splits = this.splitsCollection.snapshotChanges().map(changes => {
+      this.hasGroups = changes.length > 0;
       return changes.map(c => ({ id: c.payload.doc.id, ...c.payload.doc.data() }));
     });
   }
@@ -59,8 +65,13 @@ export class HomePage {
     const welcomeModal = this.modalCtrl.create(WelcomeModal);
     welcomeModal.onDidDismiss(data => {
       this.storage.set('user', data);
+      this.user = data;
     });
     welcomeModal.present();
+  }
+
+  createNewSplit() {
+    this.modalCtrl.create(NewSplitModal).present();
   }
 
   addSplit() {
@@ -73,6 +84,7 @@ export class HomePage {
 
   clear() {
     this.storage.clear();
+    this.presentWelcomeModal();
   }
 
 }
