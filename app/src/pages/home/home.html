@@ -20,11 +20,19 @@
       <div>No splits yet, add one below!</div>
     </ion-item>
 
-    <ion-item item-icon-right *ngFor="let split of splits | async">
-      <div flex-start>{{ split.title }}</div>
-      <ion-note flex-end>{{ split.participants.length }} members</ion-note>
-      <ion-icon name="arrow-forward" item-end></ion-icon>
-    </ion-item>
+    <ion-item-sliding *ngFor="let split of splits | async">
+      <ion-item item-icon-right (click)="navToSplit(split)">
+        <div flex-start>{{ split.title }}</div>
+        <ion-note flex-end>{{ split.participants.length }} members</ion-note>
+        <ion-icon name="arrow-forward" item-end></ion-icon>
+      </ion-item>
+      <ion-item-options side="right">
+        <button ion-button color="danger" (tap)="removeSplit(split)">
+          <ion-icon name="trash"></ion-icon>
+          Kill
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
   </ion-list>
 
   <button ion-button block color="light" (click)="createNewSplit()">Create new Split</button>

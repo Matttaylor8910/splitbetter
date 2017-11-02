@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, ModalController } from 'ionic-angular';
 import { Storage } from "@ionic/storage";
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 import { WelcomeModal } from './welcome/welcome';
 import { NewSplitModal } from './new-split/new-split';
+import { SplitDashboardPage } from '../split-dashboard/split-dashboard';
 
 interface Split {
   title: string;
@@ -68,6 +69,12 @@ export class HomePage {
       this.user = data;
     });
     welcomeModal.present();
+  }
+
+  navToSplit(split: Split) {
+    this.navCtrl.push(SplitDashboardPage, {
+      id: split.id
+    });
   }
 
   createNewSplit() {
