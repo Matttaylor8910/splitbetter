@@ -1,21 +1,11 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, ModalController } from 'ionic-angular';
-import { Storage } from "@ionic/storage";
-import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-import { Observable } from 'rxjs/Observable';
+import {Component} from '@angular/core';
+import {IonicPage, NavController, ModalController} from 'ionic-angular';
+import {Storage} from "@ionic/storage";
 import 'rxjs/add/operator/map';
-
-import { WelcomeModal } from './welcome/welcome';
-import { NewSplitModal } from './new-split/new-split';
-import { SplitDashboardPage } from '../split-dashboard/split-dashboard';
-
-interface Split {
-  title: string;
-  payer: string;
-  participants: string;
-  cost: string;
-  id?: string;
-}
+import {WelcomeModal} from './welcome/welcome';
+import {NewSplitModal} from './new-split/new-split';
+import {SplitDashboardPage} from '../split-dashboard/split-dashboard';
+import {Split, SplitProvider} from "../../providers/split/split";
 
 @IonicPage()
 @Component({
@@ -31,18 +21,16 @@ export class HomePage {
     cost: ''
   };
 
-  splitsCollection: AngularFirestoreCollection<Split>;
-  // TODO: strongly type
-  splits: Observable<any[]>;
-  hasGroups: boolean;
   user: any;
 
   constructor(
     public navCtrl: NavController,
     public modalCtrl: ModalController,
-    private afs: AngularFirestore,
-    private storage: Storage
-  ) {}
+    private storage: Storage,
+    private splitProvider: SplitProvider)
+  {}
+
+  removeSplit = this.splitProvider.removeSplit;
 
   ionViewWillEnter() {
     // ask the user who they are if they aren't set up
@@ -52,13 +40,6 @@ export class HomePage {
       } else {
         this.user = user;
       }
-    });
-
-    // TODO: look up difference between valueChanges and snapshotChanges
-    this.splitsCollection = this.afs.collection('splits');  // reference
-    this.splits = this.splitsCollection.snapshotChanges().map(changes => {
-      this.hasGroups = changes.length > 0;
-      return changes.map(c => ({ id: c.payload.doc.id, ...c.payload.doc.data() }));
     });
   }
 
@@ -79,14 +60,6 @@ export class HomePage {
 
   createNewSplit() {
     this.modalCtrl.create(NewSplitModal).present();
-  }
-
-  addSplit() {
-    this.splitsCollection.add(this.newSplit);
-  }
-
-  removeSplit(split: Split) {
-    this.splitsCollection.doc(split.id).delete();
   }
 
   clear() {

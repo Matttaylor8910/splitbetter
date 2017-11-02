@@ -16,7 +16,7 @@ import { SettingsPage } from '../pages/settings/settings';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { WeatherTestProvider } from '../providers/weather-test/weather-test';
+import { SplitProvider } from '../providers/split/split';
 
 @NgModule({
   imports: [
@@ -45,7 +45,7 @@ import { WeatherTestProvider } from '../providers/weather-test/weather-test';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    WeatherTestProvider
+    SplitProvider
   ]
 })
 export class AppModule {}

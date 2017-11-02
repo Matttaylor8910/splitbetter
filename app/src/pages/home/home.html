@@ -12,15 +12,15 @@
   <ion-list>
     <ion-list-header>Splits</ion-list-header>
 
-    <ion-item *ngIf="hasGroups === undefined" class="align-center">
+    <ion-item *ngIf="splitProvider.hasSplits === undefined" class="align-center">
       <ion-spinner></ion-spinner>
     </ion-item>
 
-    <ion-item *ngIf="hasGroups === false">
+    <ion-item *ngIf="splitProvider.hasSplits === false">
       <div>No splits yet, add one below!</div>
     </ion-item>
 
-    <ion-item-sliding *ngFor="let split of splits | async">
+    <ion-item-sliding *ngFor="let split of splitProvider.splits | async">
       <ion-item item-icon-right (click)="navToSplit(split)">
         <div flex-start>{{ split.title }}</div>
         <ion-note flex-end>{{ split.participants.length }} members</ion-note>
