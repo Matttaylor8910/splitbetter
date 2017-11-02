@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { ViewController } from 'ionic-angular';
+import {Component} from '@angular/core';
+import {ViewController} from 'ionic-angular';
 
 @Component({
   selector: 'modal-welcome',
@@ -9,9 +9,7 @@ export class WelcomeModal {
 
   user;
 
-  constructor(
-    public viewCtrl: ViewController
-  ) {
+  constructor(public viewCtrl: ViewController) {
     this.user = {};
   }
 

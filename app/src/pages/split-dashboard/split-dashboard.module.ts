@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
-import { IonicPageModule } from 'ionic-angular';
-import { SplitDashboardPage } from './split-dashboard';
+import {NgModule} from '@angular/core';
+import {IonicPageModule} from 'ionic-angular';
+import {SplitDashboardPage} from './split-dashboard';
 
 @NgModule({
   declarations: [
@@ -10,4 +10,5 @@ import { SplitDashboardPage } from './split-dashboard';
     IonicPageModule.forChild(SplitDashboardPage),
   ],
 })
-export class SplitDashboardPageModule {}
+export class SplitDashboardPageModule {
+}
